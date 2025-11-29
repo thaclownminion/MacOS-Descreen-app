@@ -8,16 +8,18 @@ To still be able to run it go to:
 
 **Settings -> Privacy & security** and scroll all the way down and click the "open anyways" button, then it should open the app. 
 
-## disclaimer
+Releases link: https://github.com/thaclownminion/MacOS-eye-care/releases
+
+## Disclaimer
 I do not yet have a windows nor linux version and am working on it at the moment
 
 ## Plus
 This app works on both intel and M/ARM chip based macbooks. 
 
-## where to find the app
+## Where to find the app
 You can find the app on the top of your screen (in the menu bar). 
 
-# features
+# Features
 This app blocks your screen for 20 secunds (that's the default, you can change this in the settings) of time every 20 minutes (that's the default, you can change this in the settings). 
 You can set a focus time and in that time you won't be blocked. For example in a meeting. You can also decide to take your break at any time you want and the timer will reset. 
 You can also set day for which you don't or do want the blocks to be happening. 
@@ -26,8 +28,9 @@ You also can add a notification 1, 2 or 5 minutes before your break splash scree
 There is also a sleep function mode but I do not recomend it yet due to it not working well yet. (It is something for the fututre)
 
 # Credits
-creator: Kai Rozema
+Creator: Kai Rozema
 
-For sugestions and contact: https://github.com/thaclownminion/MacOS-eye-care/issues
+For sugestions: https://github.com/thaclownminion/MacOS-eye-care/issues
+Contact: thaclownminion@users.noreply.github.com
 
 If you have any good idea for new features or a new app please contact me, I would love to help!
