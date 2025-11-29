@@ -34,4 +34,4 @@ crashlytics.properties
 # Swift support mappen en bestanden
 EyeCareTests/
 EyeCareUITests/
-EyeCare.xcodeproj/
+.gitignore
