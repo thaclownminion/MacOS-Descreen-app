@@ -1,0 +1,37 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Gebouwde apps en archives
+*.dSYM.zip
+*.dSYM
+
+# Provisioning profiles
+*.mobileprovision
+*.provisionprofile
+
+# Crashlytics
+crashlytics-build.properties
+crashlytics.properties
+
+# Swift support mappen en bestanden
+/Users/kairozema/EyeCare/MacOS-eye-care/EyeCare.xcodeproj 
+/Users/kairozema/EyeCare/MacOS-eye-care/EyeCareTests 
+/Users/kairozema/EyeCare/MacOS-eye-care/EyeCareUITests
