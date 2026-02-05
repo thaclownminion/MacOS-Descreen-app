@@ -34,10 +34,15 @@ struct SettingsView: View {
     @State private var quitDelayEnabled: Bool = UserDefaults.standard.bool(forKey: "quitDelayEnabled")
     @State private var quitDelaySeconds: Double = UserDefaults.standard.double(forKey: "quitDelaySeconds") == 0 ? 10 : UserDefaults.standard.double(forKey: "quitDelaySeconds")
     
-    // NEW: Donation link
-    @State private var donationLink: String = UserDefaults.standard.string(forKey: "donationLink") ?? ""
+    // Quit countdown timer state
+    @State private var quitCountdownActive: Bool = false
+    @State private var quitCountdownRemaining: Int = 0
+    @State private var quitTimer: Timer? = nil
     
     @State private var selectedTab: SettingsTab = .general
+    
+    // HARDCODED DONATION LINK - Change this URL to your donation page
+    private let donationURL = "https://buymeacoffee.com/kai_rozema"
     
     let defaultBreakMessage = "Time for a break!"
     
@@ -80,9 +85,9 @@ struct SettingsView: View {
             VStack(spacing: 8) {
                 Image(systemName: "eye.fill")
                     .font(.system(size: 40))
-                    .foregroundColor(.cyan)
+                    .foregroundColor(.black)
                 
-                Text("lookaway")
+                Text("Eye Care")
                     .font(.title2)
                     .fontWeight(.bold)
                 
@@ -129,21 +134,19 @@ struct SettingsView: View {
             
             // Action buttons
             HStack(spacing: 12) {
-                // Donation button (if link is set)
-                if !donationLink.isEmpty {
-                    Button(action: openDonationLink) {
-                        HStack {
-                            Image(systemName: "heart.fill")
-                            Text("Donate")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(Color.pink)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                // Donation button
+                Button(action: openDonationLink) {
+                    HStack {
+                        Image(systemName: "heart.fill")
+                        Text("Buy me a coffee")
                     }
-                    .buttonStyle(.plain)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Color.pink)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
                 }
+                .buttonStyle(.plain)
                 
                 Button(action: saveSettings) {
                     HStack {
@@ -223,21 +226,6 @@ struct SettingsView: View {
                         }
                     
                     Text("Start lookaway automatically when you log in")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-            }
-            
-            SettingGroup(title: "Support") {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Donation Link")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    
-                    TextField("Enter your donation URL", text: $donationLink)
-                        .textFieldStyle(.roundedBorder)
-                    
-                    Text("Add your donation link to show a donate button")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -331,11 +319,11 @@ struct SettingsView: View {
                             Toggle("1 minute before", isOn: $notification1min)
                             
                             Text(useSystemNotifications ?
-                                "System notifications appear in Notification Center" :
-                                "In-app indicator shows at top-right of screen with live countdown")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                                .padding(.top, 5)
+                                 "System notifications appear in Notification Center" :
+                                    "In-app indicator shows at top-right of screen with live countdown")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.top, 5)
                         }
                     }
                 }
@@ -443,7 +431,7 @@ struct SettingsView: View {
                             
                             Slider(value: $quitDelaySeconds, in: 5...60, step: 5)
                             
-                            Text("Countdown before quitting (window must stay focused)")
+                            Text("Wait time before the quit button becomes enabled")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -458,18 +446,29 @@ struct SettingsView: View {
             
             SettingGroup(title: "Danger Zone") {
                 VStack(alignment: .leading, spacing: 12) {
-                    Button(action: { appDelegate?.quitFromSettings() }) {
+                    Button(action: handleQuitButton) {
                         HStack {
-                            Image(systemName: "xmark.circle.fill")
-                            Text("Quit lookaway")
+                            Image(systemName: quitCountdownActive ? "timer" : "xmark.circle.fill")
+                            if quitCountdownActive {
+                                Text("Wait \(quitCountdownRemaining)s to quit")
+                            } else {
+                                Text("Quit lookaway")
+                            }
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 10)
-                        .background(Color.red)
+                        .background(quitCountdownActive ? Color.gray : Color.red)
                         .foregroundColor(.white)
                         .cornerRadius(8)
                     }
                     .buttonStyle(.plain)
+                    .disabled(quitCountdownActive)
+                    .opacity(quitCountdownActive ? 0.6 : 1.0)
+                    
+                    if quitCountdownActive {
+                        ProgressView(value: Double(Int(quitDelaySeconds) - quitCountdownRemaining), total: Double(Int(quitDelaySeconds)))
+                            .progressViewStyle(.linear)
+                    }
                     
                     Text("Only way to quit the application")
                         .font(.caption)
@@ -478,6 +477,16 @@ struct SettingsView: View {
             }
         }
         .padding(.top, 10)
+        .onAppear {
+            // Start the timer when the Advanced tab appears
+            if quitDelayEnabled {
+                startQuitCountdown()
+            }
+        }
+        // Remove .onDisappear if you don't want to reset the timer when leaving the tab
+        // .onDisappear {
+        //     cancelQuitCountdown()
+        // }
     }
     
     // MARK: - Helper Functions
@@ -501,10 +510,10 @@ struct SettingsView: View {
     }
     
     func openDonationLink() {
-        guard let url = URL(string: donationLink) else {
+        guard let url = URL(string: donationURL) else {
             let alert = NSAlert()
-            alert.messageText = "Invalid URL"
-            alert.informativeText = "The donation link is not a valid URL."
+            alert.messageText = "Invalid Donation URL"
+            alert.informativeText = "The donation URL is not properly configured. Please update it in the code."
             alert.alertStyle = .warning
             alert.addButton(withTitle: "OK")
             alert.runModal()
@@ -512,6 +521,45 @@ struct SettingsView: View {
         }
         
         NSWorkspace.shared.open(url)
+    }
+    
+    // Start the countdown
+    func startQuitCountdown() {
+        guard quitDelayEnabled else {
+            NSApplication.shared.terminate(nil)
+            return
+        }
+        quitCountdownActive = true
+        quitCountdownRemaining = Int(quitDelaySeconds)
+        quitTimer?.invalidate()
+        quitTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [self] timer in
+            quitCountdownRemaining -= 1
+            
+            if quitCountdownRemaining <= 0 {
+                timer.invalidate()
+                quitTimer = nil
+                quitCountdownActive = false
+                // Timer completed, button is now enabled
+            }
+        }
+    }
+    
+    // Handle the quit button
+    func handleQuitButton() {
+        if quitCountdownActive {
+            return // Do nothing if countdown is active
+        }
+        
+        if quitDelayEnabled && quitDelaySeconds > 0 && !quitCountdownActive && quitCountdownRemaining == 0 {
+            // Quit immediately if timer is completed
+            NSApplication.shared.terminate(nil)
+        } else if quitDelayEnabled && quitDelaySeconds > 0 {
+            // Start countdown if timer is not active
+            startQuitCountdown()
+        } else {
+            // Quit immediately if delay is disabled
+            NSApplication.shared.terminate(nil)
+        }
     }
     
     func saveSettings() {
@@ -546,9 +594,6 @@ struct SettingsView: View {
         UserDefaults.standard.set(quitDelayEnabled, forKey: "quitDelayEnabled")
         UserDefaults.standard.set(Int(quitDelaySeconds), forKey: "quitDelaySeconds")
         
-        // Save donation link
-        UserDefaults.standard.set(donationLink, forKey: "donationLink")
-        
         let alert = NSAlert()
         alert.messageText = "Settings Saved ✅"
         alert.informativeText = "Your settings have been saved successfully."
@@ -560,28 +605,28 @@ struct SettingsView: View {
             window.close()
         }
     }
-}
-
-// MARK: - Setting Group Component
-struct SettingGroup<Content: View>: View {
-    let title: String
-    let content: Content
     
-    init(title: String, @ViewBuilder content: () -> Content) {
-        self.title = title
-        self.content = content()
-    }
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(title)
-                .font(.headline)
-                .foregroundColor(.primary)
-            
-            content
+    // MARK: - Setting Group Component
+    struct SettingGroup<Content: View>: View {
+        let title: String
+        let content: Content
+        
+        init(title: String, @ViewBuilder content: () -> Content) {
+            self.title = title
+            self.content = content()
         }
-        .padding()
-        .background(Color.secondary.opacity(0.1))
-        .cornerRadius(10)
+        
+        var body: some View {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                content
+            }
+            .padding()
+            .background(Color.secondary.opacity(0.1))
+            .cornerRadius(10)
+        }
     }
 }

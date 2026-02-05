@@ -56,7 +56,7 @@ struct InAppWarningView: View {
     var titleText: String {
         if showingCountdown {
             return "Break Starting Soon!"
-        } else if let minutes = minutesRemaining {
+        } else if minutesRemaining != nil {
             return "Break Coming Soon"
         }
         return "Break Alert"

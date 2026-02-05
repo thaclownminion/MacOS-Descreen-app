@@ -11,11 +11,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private var menuUpdateTimer: Timer?
     
-    // Quit protection
-    private var quitTimer: Timer?
-    private var quitCountdown: Int = 0
-    private var quitWindow: NSWindow?
-    
     override init() {
         super.init()
     }
@@ -178,6 +173,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem(title: "Take Break Now", action: #selector(takeBreakNow), keyEquivalent: "b"))
         
         menu.addItem(NSMenuItem.separator())
+        
+        menu.addItem(NSMenuItem(title: "Send Feedback", action: #selector(openFeedback), keyEquivalent: ""))
         
         menu.addItem(NSMenuItem(title: "Credits", action: #selector(showCredits), keyEquivalent: ""))
         
@@ -349,82 +346,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         alert.runModal()
     }
     
-    // NEW: Quit from settings with optional countdown
-    func quitFromSettings() {
-        let quitDelayEnabled = UserDefaults.standard.bool(forKey: "quitDelayEnabled")
-        let quitDelaySeconds = UserDefaults.standard.integer(forKey: "quitDelaySeconds")
-        
-        if quitDelayEnabled && quitDelaySeconds > 0 {
-            // Show countdown window
-            showQuitCountdown(seconds: quitDelaySeconds)
-        } else {
-            // Quit immediately
-            NSApplication.shared.terminate(nil)
+    @objc func openFeedback() {
+        // Open GitHub issues page in browser
+        if let url = URL(string: "https://github.com/thaclownminion/MacOS-eye-care/issues") {
+            NSWorkspace.shared.open(url)
         }
-    }
-    
-    private func showQuitCountdown(seconds: Int) {
-        quitCountdown = seconds
-        
-        let quitView = QuitCountdownView(
-            countdown: quitCountdown,
-            onCancel: { [weak self] in
-                self?.cancelQuit()
-            }
-        )
-        
-        let hostingController = NSHostingController(rootView: quitView)
-        
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 400, height: 200),
-            styleMask: [.titled, .closable],
-            backing: .buffered,
-            defer: false
-        )
-        
-        window.title = "Quitting lookaway"
-        window.contentViewController = hostingController
-        window.center()
-        window.level = .floating
-        window.isReleasedWhenClosed = false
-        window.makeKeyAndOrderFront(nil)
-        
-        quitWindow = window
-        
-        // Start countdown
-        quitTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
-            guard let self = self else {
-                timer.invalidate()
-                return
-            }
-            
-            self.quitCountdown -= 1
-            
-            // Update view
-            if let hostingController = self.quitWindow?.contentViewController as? NSHostingController<QuitCountdownView> {
-                hostingController.rootView = QuitCountdownView(
-                    countdown: self.quitCountdown,
-                    onCancel: { [weak self] in
-                        self?.cancelQuit()
-                    }
-                )
-            }
-            
-            if self.quitCountdown <= 0 {
-                timer.invalidate()
-                self.quitWindow?.close()
-                NSApplication.shared.terminate(nil)
-            }
-        }
-        
-        NSApp.activate(ignoringOtherApps: true)
-    }
-    
-    private func cancelQuit() {
-        quitTimer?.invalidate()
-        quitTimer = nil
-        quitWindow?.close()
-        quitWindow = nil
     }
     
     func showBreakOverlay() {
@@ -579,14 +505,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let alert = NSAlert()
         alert.messageText = "Credits"
         alert.informativeText = """
-        lookaway - Eye Care App
+        Eye Care App
         
         Created by: Kai Rozema
         
         If you have any good ideas for new features or an app, please contact me, I like to make apps and I would love to help you!
         
         © \(Calendar.current.component(.year, from: Date()))
-        App version: 3.0.0
+        App version: 3.1.3
         """
         alert.alertStyle = .informational
         alert.addButton(withTitle: "OK")
@@ -599,44 +525,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 NSWorkspace.shared.open(url)
             }
         }
-    }
-}
-
-// NEW: Quit countdown view
-struct QuitCountdownView: View {
-    let countdown: Int
-    let onCancel: () -> Void
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .font(.system(size: 50))
-                .foregroundColor(.orange)
-            
-            Text("Quitting lookaway in:")
-                .font(.headline)
-            
-            Text("\(countdown)")
-                .font(.system(size: 60, weight: .bold, design: .rounded))
-                .foregroundColor(.red)
-            
-            Text("Keep this window focused to continue")
-                .font(.caption)
-                .foregroundColor(.secondary)
-            
-            Button(action: onCancel) {
-                Text("Cancel")
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            .buttonStyle(.plain)
-            .padding(.horizontal, 30)
-        }
-        .padding()
     }
 }
 

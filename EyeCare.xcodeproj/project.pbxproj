@@ -24,25 +24,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		11FBEBDA2ED599C000B78471 /* Lookaway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lookaway.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		11FBEBE82ED599C400B78471 /* LookawayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LookawayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		11FBEBF22ED599C400B78471 /* LookawayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LookawayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		11FBEBDA2ED599C000B78471 /* EyeCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyeCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		11FBEBE82ED599C400B78471 /* EyeCareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EyeCareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		11FBEBF22ED599C400B78471 /* EyeCareUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EyeCareUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		11FBEBDC2ED599C000B78471 /* Lookaway */ = {
+		11FBEBDC2ED599C000B78471 /* EyeCare */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Lookaway;
+			path = EyeCare;
 			sourceTree = "<group>";
 		};
-		11FBEBEB2ED599C400B78471 /* LookawayTests */ = {
+		11FBEBEB2ED599C400B78471 /* EyeCareTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LookawayTests;
+			path = EyeCareTests;
 			sourceTree = "<group>";
 		};
-		11FBEBF52ED599C400B78471 /* LookawayUITests */ = {
+		11FBEBF52ED599C400B78471 /* EyeCareUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LookawayUITests;
+			path = EyeCareUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -72,12 +72,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		116F9F062F3372F70024AE98 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		11FBEBD12ED599C000B78471 = {
 			isa = PBXGroup;
 			children = (
-				11FBEBDC2ED599C000B78471 /* Lookaway */,
-				11FBEBEB2ED599C400B78471 /* LookawayTests */,
-				11FBEBF52ED599C400B78471 /* LookawayUITests */,
+				11FBEBDC2ED599C000B78471 /* EyeCare */,
+				11FBEBEB2ED599C400B78471 /* EyeCareTests */,
+				11FBEBF52ED599C400B78471 /* EyeCareUITests */,
+				116F9F062F3372F70024AE98 /* Frameworks */,
 				11FBEBDB2ED599C000B78471 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +93,9 @@
 		11FBEBDB2ED599C000B78471 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				11FBEBDA2ED599C000B78471 /* Lookaway.app */,
-				11FBEBE82ED599C400B78471 /* LookawayTests.xctest */,
-				11FBEBF22ED599C400B78471 /* LookawayUITests.xctest */,
+				11FBEBDA2ED599C000B78471 /* EyeCare.app */,
+				11FBEBE82ED599C400B78471 /* EyeCareTests.xctest */,
+				11FBEBF22ED599C400B78471 /* EyeCareUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +103,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		11FBEBD92ED599C000B78471 /* Lookaway */ = {
+		11FBEBD92ED599C000B78471 /* EyeCare */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 11FBEBFC2ED599C400B78471 /* Build configuration list for PBXNativeTarget "Lookaway" */;
+			buildConfigurationList = 11FBEBFC2ED599C400B78471 /* Build configuration list for PBXNativeTarget "EyeCare" */;
 			buildPhases = (
 				11FBEBD62ED599C000B78471 /* Sources */,
 				11FBEBD72ED599C000B78471 /* Frameworks */,
@@ -108,18 +116,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				11FBEBDC2ED599C000B78471 /* Lookaway */,
+				11FBEBDC2ED599C000B78471 /* EyeCare */,
 			);
-			name = Lookaway;
+			name = EyeCare;
 			packageProductDependencies = (
 			);
 			productName = EyeCare;
-			productReference = 11FBEBDA2ED599C000B78471 /* Lookaway.app */;
+			productReference = 11FBEBDA2ED599C000B78471 /* EyeCare.app */;
 			productType = "com.apple.product-type.application";
 		};
-		11FBEBE72ED599C400B78471 /* LookawayTests */ = {
+		11FBEBE72ED599C400B78471 /* EyeCareTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 11FBEBFF2ED599C400B78471 /* Build configuration list for PBXNativeTarget "LookawayTests" */;
+			buildConfigurationList = 11FBEBFF2ED599C400B78471 /* Build configuration list for PBXNativeTarget "EyeCareTests" */;
 			buildPhases = (
 				11FBEBE42ED599C400B78471 /* Sources */,
 				11FBEBE52ED599C400B78471 /* Frameworks */,
@@ -131,18 +139,18 @@
 				11FBEBEA2ED599C400B78471 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				11FBEBEB2ED599C400B78471 /* LookawayTests */,
+				11FBEBEB2ED599C400B78471 /* EyeCareTests */,
 			);
-			name = LookawayTests;
+			name = EyeCareTests;
 			packageProductDependencies = (
 			);
 			productName = EyeCareTests;
-			productReference = 11FBEBE82ED599C400B78471 /* LookawayTests.xctest */;
+			productReference = 11FBEBE82ED599C400B78471 /* EyeCareTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		11FBEBF12ED599C400B78471 /* LookawayUITests */ = {
+		11FBEBF12ED599C400B78471 /* EyeCareUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 11FBEC022ED599C400B78471 /* Build configuration list for PBXNativeTarget "LookawayUITests" */;
+			buildConfigurationList = 11FBEC022ED599C400B78471 /* Build configuration list for PBXNativeTarget "EyeCareUITests" */;
 			buildPhases = (
 				11FBEBEE2ED599C400B78471 /* Sources */,
 				11FBEBEF2ED599C400B78471 /* Frameworks */,
@@ -154,13 +162,13 @@
 				11FBEBF42ED599C400B78471 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				11FBEBF52ED599C400B78471 /* LookawayUITests */,
+				11FBEBF52ED599C400B78471 /* EyeCareUITests */,
 			);
-			name = LookawayUITests;
+			name = EyeCareUITests;
 			packageProductDependencies = (
 			);
 			productName = EyeCareUITests;
-			productReference = 11FBEBF22ED599C400B78471 /* LookawayUITests.xctest */;
+			productReference = 11FBEBF22ED599C400B78471 /* EyeCareUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +194,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 11FBEBD52ED599C000B78471 /* Build configuration list for PBXProject "Lookaway" */;
+			buildConfigurationList = 11FBEBD52ED599C000B78471 /* Build configuration list for PBXProject "EyeCare" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -195,14 +203,17 @@
 			);
 			mainGroup = 11FBEBD12ED599C000B78471;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				116F9F052F33718E0024AE98 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 11FBEBDB2ED599C000B78471 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				11FBEBD92ED599C000B78471 /* Lookaway */,
-				11FBEBE72ED599C400B78471 /* LookawayTests */,
-				11FBEBF12ED599C400B78471 /* LookawayUITests */,
+				11FBEBD92ED599C000B78471 /* EyeCare */,
+				11FBEBE72ED599C400B78471 /* EyeCareTests */,
+				11FBEBF12ED599C400B78471 /* EyeCareUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,12 +269,12 @@
 /* Begin PBXTargetDependency section */
 		11FBEBEA2ED599C400B78471 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 11FBEBD92ED599C000B78471 /* Lookaway */;
+			target = 11FBEBD92ED599C000B78471 /* EyeCare */;
 			targetProxy = 11FBEBE92ED599C400B78471 /* PBXContainerItemProxy */;
 		};
 		11FBEBF42ED599C400B78471 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 11FBEBD92ED599C000B78471 /* Lookaway */;
+			target = 11FBEBD92ED599C000B78471 /* EyeCare */;
 			targetProxy = 11FBEBF32ED599C400B78471 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -452,7 +463,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lookaway.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Lookaway";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EyeCare.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EyeCare";
 			};
 			name = Debug;
 		};
@@ -469,7 +480,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lookaway.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Lookaway";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EyeCare.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EyeCare";
 			};
 			name = Release;
 		};
@@ -506,7 +517,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		11FBEBD52ED599C000B78471 /* Build configuration list for PBXProject "Lookaway" */ = {
+		11FBEBD52ED599C000B78471 /* Build configuration list for PBXProject "EyeCare" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				11FBEBFA2ED599C400B78471 /* Debug */,
@@ -515,7 +526,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		11FBEBFC2ED599C400B78471 /* Build configuration list for PBXNativeTarget "Lookaway" */ = {
+		11FBEBFC2ED599C400B78471 /* Build configuration list for PBXNativeTarget "EyeCare" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				11FBEBFD2ED599C400B78471 /* Debug */,
@@ -524,7 +535,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		11FBEBFF2ED599C400B78471 /* Build configuration list for PBXNativeTarget "LookawayTests" */ = {
+		11FBEBFF2ED599C400B78471 /* Build configuration list for PBXNativeTarget "EyeCareTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				11FBEC002ED599C400B78471 /* Debug */,
@@ -533,7 +544,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		11FBEC022ED599C400B78471 /* Build configuration list for PBXNativeTarget "LookawayUITests" */ = {
+		11FBEC022ED599C400B78471 /* Build configuration list for PBXNativeTarget "EyeCareUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				11FBEC032ED599C400B78471 /* Debug */,
@@ -543,6 +554,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		116F9F052F33718E0024AE98 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 11FBEBD22ED599C000B78471 /* Project object */;
 }
