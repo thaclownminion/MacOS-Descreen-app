@@ -225,7 +225,7 @@ struct SettingsView: View {
                             }
                         }
                     
-                    Text("Start lookaway automatically when you log in")
+                    Text("Start EyeCare automatically when you log in")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -452,7 +452,7 @@ struct SettingsView: View {
                             if quitCountdownActive {
                                 Text("Wait \(quitCountdownRemaining)s to quit")
                             } else {
-                                Text("Quit lookaway")
+                                Text("Quit EyeCare")
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -497,7 +497,7 @@ struct SettingsView: View {
     func applyThemeImmediately(_ theme: AppTheme) {
         timerManager.currentTheme = theme
         
-        if let window = NSApp.windows.first(where: { $0.title == "lookaway Settings" }) {
+        if let window = NSApp.windows.first(where: { $0.title == "EyeCare Settings" }) {
             switch theme {
             case .system:
                 window.appearance = nil
@@ -601,7 +601,7 @@ struct SettingsView: View {
         alert.addButton(withTitle: "OK")
         alert.runModal()
         
-        if let window = NSApp.windows.first(where: { $0.title == "lookaway Settings" }) {
+        if let window = NSApp.windows.first(where: { $0.title == "EyeCare Settings" }) {
             window.close()
         }
     }

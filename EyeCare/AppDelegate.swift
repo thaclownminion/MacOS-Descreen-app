@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "eye.fill", accessibilityDescription: "lookaway")
+            button.image = NSImage(systemSymbolName: "eye.fill", accessibilityDescription: "EyeCare")
         }
         
         // Initialize timer manager
@@ -89,7 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Show a brief notification
             let alert = NSAlert()
             alert.messageText = "Quit Disabled"
-            alert.informativeText = "To quit lookaway, please use the Quit option in Settings."
+            alert.informativeText = "To quit EyeCare, please use the Quit option in Settings."
             alert.alertStyle = .informational
             alert.addButton(withTitle: "OK")
             alert.runModal()
@@ -206,7 +206,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let hostingController = NSHostingController(rootView: settingsView)
             
             settingsWindow = NSWindow(contentViewController: hostingController)
-            settingsWindow?.title = "lookaway Settings"
+            settingsWindow?.title = "EyeCare Settings"
             settingsWindow?.styleMask = [.titled, .closable, .resizable]
             settingsWindow?.setContentSize(NSSize(width: 450, height: 750))
             settingsWindow?.center()
@@ -340,7 +340,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func showLaunchAtLoginLegacyMessage() {
         let alert = NSAlert()
         alert.messageText = "Manual Setup Required"
-        alert.informativeText = "Please add lookaway to your Login Items manually in System Preferences > Users & Groups > Login Items."
+        alert.informativeText = "Please add EyeCare to your Login Items manually in System Preferences > Users & Groups > Login Items."
         alert.alertStyle = .informational
         alert.addButton(withTitle: "OK")
         alert.runModal()
@@ -512,7 +512,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         If you have any good ideas for new features or an app, please contact me, I like to make apps and I would love to help you!
         
         © \(Calendar.current.component(.year, from: Date()))
-        App version: 3.1.3
+        App version: 3.1.4
         """
         alert.alertStyle = .informational
         alert.addButton(withTitle: "OK")
