@@ -87,7 +87,7 @@ struct SettingsView: View {
                     .font(.system(size: 40))
                     .foregroundColor(.black)
                 
-                Text("Eye Care")
+                Text("Descreen")
                     .font(.title2)
                     .fontWeight(.bold)
                 
@@ -225,7 +225,7 @@ struct SettingsView: View {
                             }
                         }
                     
-                    Text("Start EyeCare automatically when you log in")
+                    Text("Start Descreen automatically when you log in")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -452,7 +452,7 @@ struct SettingsView: View {
                             if quitCountdownActive {
                                 Text("Wait \(quitCountdownRemaining)s to quit")
                             } else {
-                                Text("Quit EyeCare")
+                                Text("Quit Descreen")
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -497,7 +497,7 @@ struct SettingsView: View {
     func applyThemeImmediately(_ theme: AppTheme) {
         timerManager.currentTheme = theme
         
-        if let window = NSApp.windows.first(where: { $0.title == "EyeCare Settings" }) {
+        if let window = NSApp.windows.first(where: { $0.title == "Descreen Settings" }) {
             switch theme {
             case .system:
                 window.appearance = nil
@@ -601,9 +601,11 @@ struct SettingsView: View {
         alert.addButton(withTitle: "OK")
         alert.runModal()
         
-        if let window = NSApp.windows.first(where: { $0.title == "EyeCare Settings" }) {
-            window.close()
+        // Use orderOut instead of close() to avoid triggering applicationShouldTerminate
+        if let window = NSApp.windows.first(where: { $0.title == "Descreen Settings" }) {
+            window.orderOut(nil)
         }
+        appDelegate?.settingsWindow = nil
     }
     
     // MARK: - Setting Group Component

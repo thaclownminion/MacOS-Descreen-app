@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "eye.fill", accessibilityDescription: "EyeCare")
+            button.image = NSImage(systemSymbolName: "eye.fill", accessibilityDescription: "Descreen")
         }
         
         // Initialize timer manager
@@ -85,18 +85,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if event.modifierFlags.contains(.command) && event.charactersIgnoringModifiers == "q" {
             // Block Command+Q completely - can only quit from settings
             print("🚫 Command+Q blocked - use settings to quit")
-            
-            // Show a brief notification
-            let alert = NSAlert()
-            alert.messageText = "Quit Disabled"
-            alert.informativeText = "To quit EyeCare, please use the Quit option in Settings."
-            alert.alertStyle = .informational
-            alert.addButton(withTitle: "OK")
-            alert.runModal()
-            
-            return nil // Block the event
+            return nil // Block the event without showing an alert here
         }
         return event
+    }
+    
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        // Check if quit protection is enabled
+        let quitProtectionEnabled = UserDefaults.standard.object(forKey: "quitProtectionEnabled") as? Bool ?? true
+        guard quitProtectionEnabled else { return .terminateNow }
+        
+        let alert = NSAlert()
+        alert.messageText = "Quit Disabled"
+        alert.informativeText = "To quit Descreen, please use the Quit option in Settings."
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+        
+        return .terminateCancel // This actually prevents the quit
     }
     
     // Menu update timer
@@ -206,7 +212,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let hostingController = NSHostingController(rootView: settingsView)
             
             settingsWindow = NSWindow(contentViewController: hostingController)
-            settingsWindow?.title = "EyeCare Settings"
+            settingsWindow?.title = "Descreen Settings"
             settingsWindow?.styleMask = [.titled, .closable, .resizable]
             settingsWindow?.setContentSize(NSSize(width: 450, height: 750))
             settingsWindow?.center()
@@ -340,7 +346,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func showLaunchAtLoginLegacyMessage() {
         let alert = NSAlert()
         alert.messageText = "Manual Setup Required"
-        alert.informativeText = "Please add EyeCare to your Login Items manually in System Preferences > Users & Groups > Login Items."
+        alert.informativeText = "Please add Descreen to your Login Items manually in System Preferences > Users & Groups > Login Items."
         alert.alertStyle = .informational
         alert.addButton(withTitle: "OK")
         alert.runModal()
@@ -505,14 +511,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let alert = NSAlert()
         alert.messageText = "Credits"
         alert.informativeText = """
-        Eye Care App
+        Descreen
         
         Created by: Kai Rozema
         
         If you have any good ideas for new features or an app, please contact me, I like to make apps and I would love to help you!
         
         © \(Calendar.current.component(.year, from: Date()))
-        App version: 3.1.4
+        App version: 3.2.0
         """
         alert.alertStyle = .informational
         alert.addButton(withTitle: "OK")

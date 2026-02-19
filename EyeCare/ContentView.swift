@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Lookaway
+//  Descreen
 
 import SwiftUI
 

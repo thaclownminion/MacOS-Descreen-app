@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct EyeCareApp: App {
+struct DescreenApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
