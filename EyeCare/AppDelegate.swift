@@ -9,6 +9,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var breakWindow: BreakOverlayWindow?
     var settingsWindow: NSWindow?
     
+    /// Set to true before calling NSApp.terminate() from Settings to bypass quit protection
+    var allowedToQuit: Bool = false
+    
     private var menuUpdateTimer: Timer?
     
     override init() {
@@ -91,10 +94,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-        // Check if quit protection is enabled
-        let quitProtectionEnabled = UserDefaults.standard.object(forKey: "quitProtectionEnabled") as? Bool ?? true
-        guard quitProtectionEnabled else { return .terminateNow }
+        // If the Settings quit button authorized this, let it through
+        if allowedToQuit { return .terminateNow }
         
+        // Otherwise block and show protection message
         let alert = NSAlert()
         alert.messageText = "Quit Disabled"
         alert.informativeText = "To quit Descreen, please use the Quit option in Settings."
@@ -102,7 +105,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         alert.addButton(withTitle: "OK")
         alert.runModal()
         
-        return .terminateCancel // This actually prevents the quit
+        return .terminateCancel
     }
     
     // Menu update timer
@@ -328,10 +331,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updateLaunchAtLoginMenuItem() {
+        let enabled = isLaunchAtLoginEnabled()
         if let menu = statusItem.menu,
            let item = menu.items.first(where: { $0.title == "Launch at Login" }) {
-            item.state = isLaunchAtLoginEnabled() ? .on : .off
+            item.state = enabled ? .on : .off
         }
+        // Notify SettingsView so its toggle stays in sync
+        NotificationCenter.default.post(
+            name: .launchAtLoginDidChange,
+            object: nil,
+            userInfo: ["enabled": enabled]
+        )
     }
     
     func showLaunchAtLoginError(enable: Bool) {
@@ -518,7 +528,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         If you have any good ideas for new features or an app, please contact me, I like to make apps and I would love to help you!
         
         © \(Calendar.current.component(.year, from: Date()))
-        App version: 3.2.0
+        App version: 3.2.2
         """
         alert.alertStyle = .informational
         alert.addButton(withTitle: "OK")
@@ -540,4 +550,8 @@ extension AppDelegate: NSWindowDelegate {
             settingsWindow = nil
         }
     }
+}
+
+extension Notification.Name {
+    static let launchAtLoginDidChange = Notification.Name("launchAtLoginDidChange")
 }

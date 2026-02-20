@@ -9,7 +9,7 @@ struct SettingsView: View {
     @State private var focusMinutes: Double
     @State private var breakMessage: String
     @State private var selectedTheme: AppTheme
-    @State private var launchAtLogin: Bool = UserDefaults.standard.bool(forKey: "launchAtLogin")
+    @State private var launchAtLogin: Bool
     
     @State private var notificationsEnabled: Bool
     @State private var useSystemNotifications: Bool
@@ -71,6 +71,9 @@ struct SettingsView: View {
         _fridayEnabled = State(initialValue: timerManager.fridayEnabled)
         _saturdayEnabled = State(initialValue: timerManager.saturdayEnabled)
         _sundayEnabled = State(initialValue: timerManager.sundayEnabled)
+        
+        // Read real launch-at-login state from SMAppService (not UserDefaults)
+        _launchAtLogin = State(initialValue: appDelegate?.isLaunchAtLoginEnabled() ?? false)
         
         _notificationsEnabled = State(initialValue: timerManager.notificationsEnabled)
         _useSystemNotifications = State(initialValue: timerManager.useSystemNotifications)
@@ -228,6 +231,11 @@ struct SettingsView: View {
                     Text("Start Descreen automatically when you log in")
                         .font(.caption)
                         .foregroundColor(.secondary)
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .launchAtLoginDidChange)) { notification in
+                if let enabled = notification.userInfo?["enabled"] as? Bool {
+                    launchAtLogin = enabled
                 }
             }
         }
@@ -526,6 +534,7 @@ struct SettingsView: View {
     // Start the countdown
     func startQuitCountdown() {
         guard quitDelayEnabled else {
+            appDelegate?.allowedToQuit = true
             NSApplication.shared.terminate(nil)
             return
         }
@@ -552,12 +561,14 @@ struct SettingsView: View {
         
         if quitDelayEnabled && quitDelaySeconds > 0 && !quitCountdownActive && quitCountdownRemaining == 0 {
             // Quit immediately if timer is completed
+            appDelegate?.allowedToQuit = true
             NSApplication.shared.terminate(nil)
         } else if quitDelayEnabled && quitDelaySeconds > 0 {
             // Start countdown if timer is not active
             startQuitCountdown()
         } else {
             // Quit immediately if delay is disabled
+            appDelegate?.allowedToQuit = true
             NSApplication.shared.terminate(nil)
         }
     }
