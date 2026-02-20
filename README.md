@@ -8,7 +8,7 @@ To still be able to run it go to:
 
 **Settings -> Privacy & security** and scroll all the way down and click the "open anyways" button, then it should open the app. 
 
-Releases: https://github.com/thaclownminion/MacOS-eye-care/releases
+Releases: https://github.com/thaclownminion/MacOS-Descreen-app/releases
 
 ## Disclaimer
 I do not yet have a windows nor linux version and I'm working on it at the moment. 
